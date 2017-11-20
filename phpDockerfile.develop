@@ -1,0 +1,16 @@
+FROM php:7.0-fpm-alpine
+
+RUN docker-php-source extract && \
+    apk add --update --no-cache autoconf g++ make libmcrypt-dev && \
+    pecl install redis xdebug && \
+    docker-php-ext-enable redis xdebug && \
+    docker-php-ext-install mcrypt && \
+    docker-php-ext-install mysqli && \
+    docker-php-ext-install mbstring && \
+    docker-php-ext-install tokenizer && \
+    docker-php-source delete &&\
+    rm -rf /var/cache/apk/*
+
+COPY xdebug.conf /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+
+EXPOSE 9001
