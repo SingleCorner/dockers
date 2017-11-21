@@ -1,0 +1,9 @@
+FROM php:5.6-fpm-alpine
+
+RUN docker-php-source extract && \
+    apk add --update --no-cache autoconf g++ make libmcrypt-dev && \
+    pecl install redis && \
+    docker-php-ext-enable redis && \
+    docker-php-ext-install mcrypt mysqli pdo_mysql mbstring tokenizer && \
+    docker-php-source delete &&\
+    rm -rf /var/cache/apk/*
