@@ -1,14 +1,9 @@
 FROM php:7.0-fpm-alpine
 
 RUN docker-php-source extract && \
-    apk add --update --no-cache autoconf g++ make libmcrypt-dev && \
-    pecl install redis && \
-    docker-php-ext-enable redis && \
-    docker-php-ext-install mcrypt && \
-    docker-php-ext-install mysqli && \
-    docker-php-ext-install pdo_mysql && \
-    docker-php-ext-install mbstring && \
-    docker-php-ext-install tokenizer && \
+    apk add --update --no-cache autoconf g++ make libtool libxslt-dev imap-dev libedit-dev icu-dev imagemagick-dev libmcrypt-dev bzip2-dev curl-dev libxml2-dev enchant-dev libpng-dev gmp-dev unixodbc-dev && \
+    pecl install imagick memcache redis && \
+    docker-php-ext-enable imagick memcache redis && \
+    docker-php-ext-install bcmath bz2 calendar ctype curl dom enchant exif gd gettext gmp hash iconv intl imap json mbstring mcrypt mysql mysqli opcache pcntl pdo pdo_mysql phar posix readline simplexml soap sockets spl standard sysvsem tokenizer xmlrpc xsl zip && \
     docker-php-source delete &&\
-    apk del autoconf g++ make libmcrypt-dev &&\
     rm -rf /var/cache/apk/*
